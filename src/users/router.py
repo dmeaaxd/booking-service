@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, Response
 from fastapi.params import Depends
-from starlette import status
 
+from src.exceptions import UserAlreadyExistException, IncorrectEmailOrPasswordException
 from src.users.auth import get_password_hash, authenticate_user, create_access_token
 from src.users.dao import UserDAO
 from src.users.dependencies import get_current_user
@@ -18,7 +18,7 @@ users_router = APIRouter(
 async def register_user(user_data: SUserAuth):
     existing_user = await UserDAO.find_one_or_none(email=user_data.email)
     if existing_user:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT)
+        raise UserAlreadyExistException
 
     hashed_pass = await get_password_hash(user_data.password)
     await UserDAO.add(email=user_data.email, hashed_password=hashed_pass)
@@ -32,7 +32,7 @@ async def register_user(response: Response, user_data: SUserAuth):
         response.set_cookie(key="access_token", value=access_token, httponly=True)
         return access_token
 
-    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    raise IncorrectEmailOrPasswordException
 
 
 @users_router.get("/logout")
