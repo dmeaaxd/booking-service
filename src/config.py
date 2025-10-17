@@ -1,4 +1,4 @@
-from pydantic.v1 import BaseSettings, root_validator
+from pydantic.v1 import BaseSettings
 
 
 class Settings(BaseSettings):
