@@ -5,7 +5,7 @@ from sqlalchemy import select, and_, or_, func, insert
 from src.bookings.models import Bookings
 from src.dao.base import BaseDAO
 from src.database import async_session_maker
-from src.hotels.models import Rooms
+from src.hotels.rooms.models import Rooms
 
 
 class BookingDAO(BaseDAO):
@@ -41,7 +41,7 @@ class BookingDAO(BaseDAO):
             rooms_left = await session.execute(get_rooms_left)
             rooms_left: int = rooms_left.scalar()
 
-            print(rooms_left)
+            # print(rooms_left)
 
             if rooms_left > 0:
                 get_price = select(Rooms.price).filter_by(id=room_id)
