@@ -7,6 +7,7 @@ from src.dao.base import BaseDAO
 from src.database import async_session_maker
 from src.hotels.models import Hotels
 from src.hotels.rooms.models import Rooms
+from src.hotels.rooms.schemas import SHotels
 
 
 class HotelDAO(BaseDAO):
@@ -33,15 +34,39 @@ class HotelDAO(BaseDAO):
                 .correlate(Hotels)
             )
 
+            rooms_left = Hotels.rooms_quantity - func.coalesce(booked_rooms_subquery, 0)
+
             query = (
-                select(Hotels)
+                select(
+                    Hotels.id,
+                    Hotels.name,
+                    Hotels.location,
+                    Hotels.stars,
+                    Hotels.services,
+                    Hotels.rooms_quantity,
+                    Hotels.image_id,
+                    rooms_left.label('rooms_left')
+                )
                 .where(
                     and_(
                         Hotels.location == location,
-                        Hotels.rooms_quantity > func.coalesce(booked_rooms_subquery, 0)
+                        rooms_left > 0
                     )
                 )
             )
 
             result = await session.execute(query)
-            return result.scalars().all()
+
+            return [
+                SHotels.model_validate({
+                    "id": row.id,
+                    "name": row.name,
+                    "location": row.location,
+                    "stars": row.stars,
+                    "services": row.services,
+                    "rooms_quantity": row.rooms_quantity,
+                    "image_id": row.image_id,
+                    "rooms_left": row.rooms_left
+                })
+                for row in result
+            ]
