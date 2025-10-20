@@ -1,6 +1,6 @@
 from datetime import date
 
-from sqlalchemy import select, and_, or_, func, not_, exists
+from sqlalchemy import select, and_, func
 
 from src.bookings.models import Bookings
 from src.dao.base import BaseDAO
