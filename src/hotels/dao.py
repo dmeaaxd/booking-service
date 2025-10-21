@@ -7,7 +7,7 @@ from src.dao.base import BaseDAO
 from src.database import async_session_maker
 from src.hotels.models import Hotels
 from src.hotels.rooms.models import Rooms
-from src.hotels.rooms.schemas import SHotels
+from src.hotels.schemas import SHotels
 
 
 class HotelDAO(BaseDAO):
@@ -16,7 +16,6 @@ class HotelDAO(BaseDAO):
     @classmethod
     async def find_all(cls, location: str, date_from: date, date_to: date):
         async with async_session_maker() as session:
-            # Подзапрос для подсчета забронированных номеров для каждого отеля
             booked_rooms_subquery = (
                 select(
                     func.count(Bookings.id).label('booked_count')

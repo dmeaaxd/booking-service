@@ -62,7 +62,7 @@ class JWTIncorrectFormatException(JWTException):
 
 
 # Rooms
-class RoomCanNotBeBookedException(JWTException):
+class RoomsNotFoundException(JWTException):
     status_code = status.HTTP_409_CONFLICT
     detail = "Не осталось свободных номеров"
 

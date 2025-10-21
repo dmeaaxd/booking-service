@@ -1,12 +1,13 @@
 from pydantic import BaseModel
 
 
-class SHotels(BaseModel):
+class SRooms(BaseModel):
     id: int
+    hotel_id: int
     name: str
-    location:  str
-    stars: int
+    description: str
+    price: int
     services: dict
-    rooms_quantity: int
+    quantity: int
     image_id: int
     rooms_left: int

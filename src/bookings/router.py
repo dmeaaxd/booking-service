@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 
 from src.bookings.dao import BookingDAO
 from src.bookings.schemas import SBooking
-from src.exceptions import RoomCanNotBeBookedException
+from src.exceptions import RoomsNotFoundException
 from src.users.dependencies import get_current_user
 from src.users.models import Users
 
@@ -24,6 +24,6 @@ async def add_booking(room_id: int, date_from: date, date_to: date, user: Users 
     booking = await BookingDAO.add(user_id = user.id, room_id=room_id, date_from=date_from, date_to=date_to)
 
     if not booking:
-        raise RoomCanNotBeBookedException
+        raise RoomsNotFoundException
 
     return booking
