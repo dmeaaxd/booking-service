@@ -71,3 +71,9 @@ class RoomsNotFoundException(JWTException):
 class HotelsNotFoundException(HotelsException):
     status_code = status.HTTP_404_NOT_FOUND
     detail = "Не осталось свободных отелей"
+
+
+# Bookings
+class BookingsDeleteException(BookingsException):
+    status_code = status.HTTP_409_CONFLICT
+    detail = "Невозможно произвести удаление"
