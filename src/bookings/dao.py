@@ -104,5 +104,3 @@ class BookingDAO(BaseDAO):
                 return new_booking.scalar()
             else:
                 return None
-
-

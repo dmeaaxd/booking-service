@@ -37,4 +37,3 @@ async def add_booking(booking_id: int, user: Users = Depends(get_current_user)):
         raise BookingsDeleteException
 
     return Response(status_code=status.HTTP_204_NO_CONTENT)
-

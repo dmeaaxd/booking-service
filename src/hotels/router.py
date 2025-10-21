@@ -24,6 +24,7 @@ async def get_hotels(location: str, date_from: date, date_to: date) -> list[SHot
 
     return hotels
 
+
 @hotels_router.get("/id/{hotel_id}")
 async def get_current_hotel(hotel_id: int) -> SCurrentHotel:
     hotel = await HotelDAO.find_by_id(model_id=hotel_id)

@@ -70,6 +70,3 @@ class RoomDAO(BaseDAO):
                 )
                 for row in result
             ]
-
-
-
