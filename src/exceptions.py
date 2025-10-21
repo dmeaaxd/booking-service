@@ -64,13 +64,17 @@ class JWTIncorrectFormatException(JWTException):
 # Rooms
 class RoomsNotFoundException(JWTException):
     status_code = status.HTTP_409_CONFLICT
-    detail = "Не осталось свободных номеров"
+    detail = "Номеров не найдено"
 
 
 # Hotels
 class HotelsNotFoundException(HotelsException):
     status_code = status.HTTP_404_NOT_FOUND
-    detail = "Не осталось свободных отелей"
+    detail = "Отелей не найдено"
+
+class CurrentHotelNotFoundException(HotelsException):
+    status_code = status.HTTP_404_NOT_FOUND
+    detail = "Отель не найден"
 
 
 # Bookings
