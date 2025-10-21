@@ -38,7 +38,7 @@ async def register_user(response: Response, user_data: SUserAuth):
 @users_router.get("/logout")
 async def logout_user(response: Response):
     response.delete_cookie(key="access_token")
-    return {"detail": "Successfully logged out"}
+    return {"detail": "Вы успешно вышли из системы"}
 
 
 @users_router.get("/me")
