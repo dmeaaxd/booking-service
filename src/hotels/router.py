@@ -1,6 +1,7 @@
 from datetime import date
 
 from fastapi import APIRouter
+from fastapi_cache.decorator import cache
 
 from src.exceptions import HotelsNotFoundException, CurrentHotelNotFoundException
 from src.hotels.dao import HotelDAO
@@ -16,6 +17,7 @@ hotels_router.include_router(rooms_router)
 
 
 @hotels_router.get("/{location}")
+@cache(expire=30)
 async def get_hotels(location: str, date_from: date, date_to: date) -> list[SHotels]:
     hotels = await HotelDAO.find_all(location=location, date_from=date_from, date_to=date_to)
 
@@ -26,6 +28,7 @@ async def get_hotels(location: str, date_from: date, date_to: date) -> list[SHot
 
 
 @hotels_router.get("/id/{hotel_id}")
+@cache(expire=30)
 async def get_current_hotel(hotel_id: int) -> SCurrentHotel:
     hotel = await HotelDAO.find_by_id(model_id=hotel_id)
 
