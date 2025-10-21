@@ -7,6 +7,11 @@ class Settings(BaseSettings):
     DB_USER: str
     DB_PASS: str
     DB_NAME: str
+
+    REDIS_HOST: str
+    REDIS_PORT: str
+    REDIS_PASS: str
+
     JWT_SECRET_CODE: str
     JWT_ALGORITHM: str
 
